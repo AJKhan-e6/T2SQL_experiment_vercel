@@ -246,8 +246,10 @@ async def test(request: UserQuery):
     config = {"configurable": {"session_id": "any"}}
     response = history_chain.invoke({"question": prompt}, config)
 
-    # Return the response
-    return {"status": response}
+
+    # Extract and return the 'output' section
+    output = response.get("status", {}).get("output", "")
+    return {"output": output}
 
 
 @app.on_event("startup")
