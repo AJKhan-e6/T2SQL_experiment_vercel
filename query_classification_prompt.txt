@@ -1,3 +1,7 @@
+- Schema Management - This category involves operations related to managing or updating database schemas, often utilized by IT or engineering teams to ensure the database structure supports business processes.
+- Schema Management - This category involves operations related to managing or updating database schemas, often utilized by IT or engineering teams to ensure the database structure supports business processes.
+- Schema Management - This category involves operations related to managing or updating database schemas, often utilized by IT or engineering teams to ensure the database structure supports business processes.
+- Schema Management - This category involves operations related to managing or updating database schemas, often utilized by IT or engineering teams to ensure the database structure supports business processes.
 """
 Classifier Task: Classify the SQL Query Based on Business Objectives and Stakeholders
 

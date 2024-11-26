@@ -248,7 +248,7 @@ async def test(request: UserQuery):
 
 
     # Extract and return the 'output' section
-    output = response.get("status", {}).get("output", "")
+    output = response.get("output", "")
     return {"output": output}
 
 
