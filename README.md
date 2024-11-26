@@ -13,6 +13,11 @@ E6DATA_DATABASE=
 E6DATA_CATALOG_NAME=
 ```
 
+Also install the required python libraries using
+```bash
+pip install -r requirements.txt
+```
+
 There are already compiled files in the *example_csv* folder. If you want to introduce a new input, go through the following code flow:
 1. First, initialise the input file by putting it though the *classification_exp* file. This code generates the type/classification of SQL queries based on their business use case.
 2. Next, generate natural questions of those sql queries using *sqltonl* file. This file generates questions which a user could input into a t2sql system in order to get the sql query.
