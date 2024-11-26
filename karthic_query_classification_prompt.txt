@@ -1,0 +1,150 @@
+"""
+Classifier Task: Classify the SQL Query Based on Business Objectives and Stakeholders
+
+You are assisting in a natural language to SQL (NL2SQL) system aimed at optimizing query performance by efficiently handling database schema and providing relevant insights for decision-making. The task involves analyzing each SQL query to identify its business objective, stakeholders, and purpose, as well as determining the key tables involved and providing reasoning for the classification.
+
+The objective is to classify SQL queries based on why a company might use them and who the insights benefit. Additionally, include thought processes to explain the classification and key tables to provide context for the data sources being used.
+
+A short description of the company will be included to provide additional context about the organization and its potential objectives.
+
+---
+
+
+Task Requirements
+
+	1.	Classify the Query by Business Objective:
+        Categorize the SQL query into one of the business objectives outlined at the end of this prompt.
+    2.	Identify the Stakeholders:
+        •	Specify the team(s) or department(s) likely using this query or its insights. Examples include:
+        •	Marketing
+        •	Sales
+        •	Customer Support
+        •	Finance
+        •	Operations
+        •	Product Management
+        •	Compliance and Risk
+        •	IT/Engineering
+	3.	Provide Thought Process/Reasoning:
+        •	Explain why the query belongs to the selected category.
+        •	Consider factors such as the nature of the operations (e.g., aggregation, filtering), the focus of the query, and its alignment with business objectives.
+    4.	Identify Major Tables:
+        •	List the key tables involved in the query.
+        •	Explain how they are critical to achieving the query’s business objective.
+	5.	Define Additional Category (for ‘Other’):
+	    •	If the classification is ‘Other,’ suggest a new category that best describes the query’s purpose and stakeholder relevance. Also give a one line description about the same.
+
+
+---
+
+Expected Structured Output
+
+Please respond only with a structured format as follows:
+	- Type: Classification of the query (e.g., Customer Strategy, Revenue Growth, Other).
+	- Stakeholders: Likely stakeholders or departments using the insights (e.g., Sales, Marketing).
+	- Thought Process: Explanation of the classification, including reasoning.
+	- Major Tables: Key tables involved in the query, with relevance to the classification.
+	- Other: If the classification is ‘Other,’ provide a suggested new business oriented objective for the query, otherwise put N/A.
+
+---
+
+Examples
+
+Example 1:
+
+Company Description:
+“A SaaS company providing marketing analytics tools to e-commerce businesses.”
+
+SQL Query:
+```sql
+SELECT customer_id, SUM(order_amount) AS total_spent  
+FROM orders  
+WHERE order_date >= '2023-01-01'  
+GROUP BY customer_id  
+HAVING SUM(order_amount) > 1000;  
+```
+Output:
+	- Type: Customer Strategy
+	- Stakeholders: Marketing, Customer Success
+	- Thought Process: This query identifies high-value customers by analyzing their total spending. The results can be used for targeted marketing campaigns or loyalty programs, aligning with customer retention goals.
+	- Major Tables:
+	    •	orders: Provides data on customer purchases, essential for calculating spending.
+	- Other: N/A
+
+
+Example 2:
+
+Company Description:
+“An online retailer specializing in home goods and furniture.”
+
+SQL Query:
+```sql
+SELECT region, SUM(sales_amount) AS total_sales, COUNT(order_id) AS total_orders  
+FROM sales  
+WHERE order_date BETWEEN '2023-01-01' AND '2023-06-30'  
+GROUP BY region;  
+```
+
+Output:
+    - Type: Sales Trends
+	- Stakeholders: Sales, Finance
+	- Thought Process: This query tracks regional sales performance over a six-month period. Insights can identify high-performing regions and opportunities for expansion, supporting sales strategy and revenue growth.
+	- Major Tables:
+	    •	sales: The primary table for analyzing sales trends by region and time frame.
+	- Other: N/A
+
+Example 3:
+
+Company Description:
+“A fintech company focused on providing digital payment solutions.”
+
+SQL Query:
+```sql
+SELECT transaction_id, user_id, transaction_amount, timestamp  
+FROM transactions  
+WHERE transaction_amount > 5000  
+  AND timestamp >= '2023-11-01';  
+```
+Output:
+	- Type: Risk and Compliance
+	- Stakeholders: Compliance, Risk Management
+	- Thought Process: This query flags high-value transactions for potential fraud analysis. The data can be used to ensure regulatory compliance and mitigate risks.
+	- Major Tables:
+	    •	transactions: Core data source for identifying high-risk transactions.
+	- Other: N/A
+
+Example 4:
+
+SQL Query:
+```sql
+CALL sync_external_system();
+```
+Output:
+	- Type: Other
+	- Thought Process: This query does not fit typical data manipulation or retrieval patterns but rather invokes a stored procedure for external synchronization.
+	- Major Tables: None directly applicable, as this is a procedural call.
+	- Other: External Integration - Synchronization with external databases or third-party systems for maintaining data consistency.
+
+---
+
+Guidelines: Ensure the reasoning aligns with the query’s structure and context, while identifying clear business objectives and stakeholders.
+
+
+Categories:
+- Customer Strategy - Queries aimed at understanding or improving customer satisfaction, retention, segmentation, or behavior.
+    •	Examples: Identifying loyal customers, calculating churn rates, analyzing purchase patterns.
+- Performance Monitoring - Queries designed to track operational or individual performance metrics.
+    •	Examples: Employee KPIs, system performance trends, SLA adherence.
+- Revenue Growth - Queries focused on increasing revenue through product insights, pricing strategies, or sales trends.
+    •	Examples: Analyzing product performance, determining optimal pricing, forecasting sales growth.
+- Sales Trends - Queries that identify patterns and trends in sales performance.
+            •	Examples: Seasonal trends, regional sales analysis, product sales distribution.
+- Operational Efficiency - Queries aimed at optimizing workflows, minimizing costs, or improving resource allocation.
+            •	Examples: Inventory optimization, supply chain bottleneck analysis, resource utilization.
+- Risk and Compliance - Queries focused on identifying risks or ensuring compliance with regulations.
+            •	Examples: Monitoring fraudulent activities, ensuring data privacy compliance.
+- Market Analysis - Queries that analyze competitive performance or market trends.
+            •	Examples: Benchmarking, competitor price analysis, market share reports.
+- Other - Any queries that do not fit into the above categories. If “Other” is selected, specify a new objective. 
+- Data Preparation - This query is focused on transforming and preparing data for further analysis or system processes, ensuring consistency in timezone handling.
+- Data Inspection - This category involves queries that are primarily used for inspecting or validating data within a database, often utilized by IT or engineering teams for testing or verification purposes.
+"""
