@@ -14,9 +14,9 @@ if not OPENAI_API_KEY:
     raise ValueError("Please set the OPENAI_API_KEY environment variable in your .env file.")
 
 # Define the path to your input/output CSV files and the prompt file
-PROMPT_FILE_PATH = '/Users/abduljawadkhan/Downloads/ml-projects/ml-projects/t2sql/karthic_sqltonl_prompt.txt'
-INPUT_CSV_PATH = '/Users/abduljawadkhan/Downloads/ml-projects/ml-projects/t2sql/classification_output.csv'
-OUTPUT_CSV_PATH = 'classification_nl_output.csv'
+PROMPT_FILE_PATH = 'sqltonl_prompt.txt'
+INPUT_CSV_PATH = 'example_csv/classification_output.csv'
+OUTPUT_CSV_PATH = 'example_csv/classification_nl_output.csv'
 
 # Function to load the prompt from a text file
 def load_prompt(file_path):

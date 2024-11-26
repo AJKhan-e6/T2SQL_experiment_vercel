@@ -19,7 +19,7 @@ if not openai_api_key:
     raise ValueError("OpenAI API key not found. Set it in the environment variables.")
 
 # Load the CSV file
-csv_path = '/Users/abduljawadkhan/Downloads/ml-projects/ml-projects/t2sql/classification_nl_output.csv'  # Update to your file path
+csv_path = 'example_csv/classification_nl_output.csv'  # Update to your file path
 try:
     df = pd.read_csv(csv_path)
 except FileNotFoundError:

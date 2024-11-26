@@ -3,7 +3,7 @@ import logging
 import sys
 import time
 import uvicorn
-from karthic_getsql import get_top_matches
+from getsql import get_top_matches
 from fastapi import FastAPI, Request, Form
 from pydantic import BaseModel
 from langchain.prompts import (

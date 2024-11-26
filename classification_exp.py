@@ -15,7 +15,7 @@ THEIRSTACK_API_KEY = os.getenv("THEIRSTACK_API_KEY")  # Your TheirStack API toke
 assert 'OPENAI_API_KEY' in os.environ, "Please set the OPENAI_API_KEY environment variable."
 assert THEIRSTACK_API_KEY, "Please set the THEIRSTACK_API_KEY environment variable."
 
-PROMPT_FILE_PATH = '/Users/abduljawadkhan/Downloads/ml-projects/ml-projects/t2sql/karthic_query_classification_prompt.txt'
+PROMPT_FILE_PATH = 'query_classification_prompt.txt'
 
 # Load the initial prompt
 def load_prompt(file_path):
@@ -141,7 +141,7 @@ def update_txt_file(file_path, new_category):
         file.writelines(lines)
 
 # Read the CSV file
-df = pd.read_csv('/Users/abduljawadkhan/Downloads/q_classification_export - processed_results (15).csv')
+df = pd.read_csv('example_csv/processed_results (16).csv')
 
 # Initialize lists to store the results
 results = {"Filtered Schema": [], "Type": [], "Stakeholders": [], "Thought Process": [], "Major Tables": [], "Other Category": []}
@@ -205,4 +205,4 @@ output_columns = original_columns + new_columns
 df = df[output_columns]
 
 # Save the updated DataFrame back to the CSV file
-df.to_csv('classification_output.csv', index=False)
+df.to_csv('example_csv/classification_output.csv', index=False)

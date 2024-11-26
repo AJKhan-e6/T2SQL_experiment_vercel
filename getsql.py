@@ -13,7 +13,7 @@ if not openai_api_key:
     openai_api_key = input("Enter your OpenAI API key: ")
 
 # Read the CSV file into a pandas DataFrame
-df = pd.read_csv('/Users/abduljawadkhan/Downloads/ml-projects/ml-projects/t2sql/classification_nl_output.csv')  # Replace with your CSV file path
+df = pd.read_csv('example_csv/classification_nl_output.csv')  # Replace with your CSV file path
 
 # Fill NaN values with empty strings
 df['Natural Language Query'] = df['Natural Language Query'].fillna('')
