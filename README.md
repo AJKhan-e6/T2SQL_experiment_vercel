@@ -1,6 +1,6 @@
 This is a demo/prototype project for testing natural language to sql capabilities and displaying them on vercel's nextjs interface. 
 
-#T2SQL Backend
+# T2SQL Backend
 
 To begin, first initialise the environment file with the following variables
 
