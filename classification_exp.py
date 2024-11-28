@@ -10,10 +10,7 @@ from langchain_core.prompts import ChatPromptTemplate
 load_dotenv()
 
 # Constants
-API_URL = 'https://api.theirstack.com/v1/companies/search'
-THEIRSTACK_API_KEY = os.getenv("THEIRSTACK_API_KEY")  # Your TheirStack API token from .env
 assert 'OPENAI_API_KEY' in os.environ, "Please set the OPENAI_API_KEY environment variable."
-assert THEIRSTACK_API_KEY, "Please set the THEIRSTACK_API_KEY environment variable."
 
 PROMPT_FILE_PATH = 'query_classification_prompt.txt'
 
@@ -31,12 +28,11 @@ llm = ChatOpenAI(model="gpt-4o", temperature=0.2, max_tokens=500)
 def build_prompt_template(prompt_content):
     return ChatPromptTemplate.from_messages([
         ("system", f"{prompt_content}"),
-        ("user", "Given the following SQL query, classify it into one of the categories. "
+        ("user", "Given the following SQL query, classify it into one of the categories. Strictly follow the output format defined in the prompt."
                  "If 'other', suggest a new category.\n\n"
                  "SQL Query:\n{sql_query}\n\n"
                  "Tables Involved:\n{list_all_tables}\n\n"
-                 "Schema Details:\n{schema_details}\n\n"
-                 "Company Details:\n{company_description}")
+                 "Schema Details:\n{schema_details}\n\n")
     ])
 
 # Initialize the prompt template
@@ -80,25 +76,6 @@ def filter_schema(schema_text, tables):
 
     return filtered_schema
 
-# Function to call the TheirStack API to fetch company description
-def fetch_company_description(company_name):
-    """
-    Fetch the company description from the TheirStack API.
-    """
-    headers = {'Content-Type': 'application/json'}
-    payload = {
-        "company_name_or": [company_name],
-        "blur_company_data": True
-    }
-    response = requests.post(f"{API_URL}?token={THEIRSTACK_API_KEY}", headers=headers, json=payload)
-    if response.status_code == 200:
-        data = response.json()
-        for entry in data.get("data", []):
-            long_description = entry.get("long_description")
-        return long_description.replace("xxxxxxx", company_name)  # Replace placeholder with company name
-    else:
-        raise Exception(f"Failed to fetch data: {response.status_code} {response.text}")
-
 # Function to parse the LLM response into structured elements
 def parse_response_content(content):
     try:
@@ -116,24 +93,23 @@ def parse_response_content(content):
 
 def update_txt_file(file_path, new_category):
     """
-    Updates the .txt file to add the new category under 'Additional Categories:'
+    Updates the .txt file to add the new category just before the closing
     """
     with open(file_path, 'r') as file:
         lines = file.readlines()
 
-    # Find the 'Additional Categories:' section
-    additional_categories_index = None
-    for idx, line in enumerate(lines):
-        if "Additional Categories:" in line:
-            additional_categories_index = idx
+    # Find the last line with closing triple quotes
+    closing_triple_quotes_index = None
+    for idx, line in enumerate(reversed(lines)):
+        if line.strip() == '"""':
+            closing_triple_quotes_index = len(lines) - 1 - idx
             break
 
-    # If 'Additional Categories:' exists, append the new category
-    if additional_categories_index is not None:
-        lines.insert(additional_categories_index + 1, f"- {new_category}\n")
+    # Insert the new category just before the closing triple quotes
+    if closing_triple_quotes_index is not None:
+        lines.insert(closing_triple_quotes_index, f"- {new_category}\n")
     else:
-        # If the section doesn't exist, append it at the end
-        lines.append("\nAdditional Categories:\n")
+        # If no closing triple quotes are found, append the new category at the end
         lines.append(f"- {new_category}\n")
 
     # Write the updated content back to the file
@@ -148,29 +124,22 @@ results = {"Filtered Schema": [], "Type": [], "Stakeholders": [], "Thought Proce
 
 # Process each SQL query and fetch data
 for index, row in df.iterrows():
-    sql_query = row.get('SQL Query', "")
+    sql_query = row.get('Original_Query', "")
     list_all_tables = eval(row.get('list_of_tables', "[]")) if pd.notna(row.get('list_of_tables')) else []
     schema = row.get('schema', "")
     filtered_schema = filter_schema(schema, list_all_tables)
-
-    company_name = "Chargebee"  # Default company name
-    try:
-        company_description = fetch_company_description(company_name)
-    except Exception as e:
-        print(f"Failed to fetch company description for {company_name}: {e}")
-        company_description = ""
 
     # Format the prompt
     formatted_prompt = prompt_template.format_messages(
         sql_query=sql_query,
         list_all_tables=list_all_tables,
         schema_details=filtered_schema,
-        company_description=company_description
     )
 
     # Invoke LLM and handle response
     try:
         response = llm.invoke(formatted_prompt)
+        print(f"\n\n Response Content:\n{response.content}")
         parsed = parse_response_content(response.content)
 
         # Check if the category is 'Other'

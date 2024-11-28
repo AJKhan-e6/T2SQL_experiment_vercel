@@ -10,7 +10,7 @@ A short description of the company will be included to provide additional contex
 ---
 
 
-Task Requirements
+# Task Requirements
 
 	1.	Classify the Query by Business Objective:
         Categorize the SQL query into one of the business objectives outlined at the end of this prompt.
@@ -36,7 +36,7 @@ Task Requirements
 
 ---
 
-Expected Structured Output
+# Expected Structured Output
 
 Please respond only with a structured format as follows:
 	- Type: Classification of the query (e.g., Customer Strategy, Revenue Growth, Other).
@@ -45,14 +45,12 @@ Please respond only with a structured format as follows:
 	- Major Tables: Key tables involved in the query, with relevance to the classification.
 	- Other: If the classification is ‘Other,’ provide a suggested new business oriented objective for the query, otherwise put N/A.
 
+Strictly follow the format of the output. Look at how the output in the examples is defined, and follow that order.
 ---
 
-Examples
+# Examples
 
 Example 1:
-
-Company Description:
-“A SaaS company providing marketing analytics tools to e-commerce businesses.”
 
 SQL Query:
 ```sql
@@ -73,9 +71,6 @@ Output:
 
 Example 2:
 
-Company Description:
-“An online retailer specializing in home goods and furniture.”
-
 SQL Query:
 ```sql
 SELECT region, SUM(sales_amount) AS total_sales, COUNT(order_id) AS total_orders  
@@ -93,9 +88,6 @@ Output:
 	- Other: N/A
 
 Example 3:
-
-Company Description:
-“A fintech company focused on providing digital payment solutions.”
 
 SQL Query:
 ```sql
@@ -129,7 +121,9 @@ Output:
 Guidelines: Ensure the reasoning aligns with the query’s structure and context, while identifying clear business objectives and stakeholders.
 
 
-Categories:
+# Categories:
+
+- Other - Any queries that do not fit into the any of the categories. If “Other” is selected, specify a new objective. 
 - Customer Strategy - Queries aimed at understanding or improving customer satisfaction, retention, segmentation, or behavior.
     •	Examples: Identifying loyal customers, calculating churn rates, analyzing purchase patterns.
 - Performance Monitoring - Queries designed to track operational or individual performance metrics.
@@ -144,7 +138,15 @@ Categories:
             •	Examples: Monitoring fraudulent activities, ensuring data privacy compliance.
 - Market Analysis - Queries that analyze competitive performance or market trends.
             •	Examples: Benchmarking, competitor price analysis, market share reports.
-- Other - Any queries that do not fit into the above categories. If “Other” is selected, specify a new objective. 
 - Data Preparation - This query is focused on transforming and preparing data for further analysis or system processes, ensuring consistency in timezone handling.
 - Data Inspection - This category involves queries that are primarily used for inspecting or validating data within a database, often utilized by IT or engineering teams for testing or verification purposes.
+- Schema Management - Operations related to managing database schema or metadata without direct data manipulation.
+- Schema Management - Operations related to managing database schema or metadata without direct data manipulation.
+- Schema Management - This category involves operations related to managing database schema or metadata without direct data manipulation.
+- Data Orchestration - This involves managing and automating data workflows, often using tools like AWS Glue for ETL processes.
+- Promotional Strategy Analysis - Queries aimed at understanding and optimizing the use of promotional offers and discounts to drive customer engagement and sales.
+- Subscription Analysis - Queries aimed at understanding and optimizing subscription models, including customer retention, revenue forecasting, and subscription lifecycle management.
+- Schema Management - This category involves operations related to managing database schema or metadata without direct data manipulation.
+- Data Orchestration - This involves managing and automating data workflows, often using tools like AWS Glue for ETL processes.
+- Schema Management - This category involves operations related to managing database schema or metadata without direct data manipulation.
 """

@@ -1,2 +1,5 @@
 .env
 new_t2sql_venv/*
+__pycache__/*
+vercel-ui/node_modules/*
+vercel-ui/.env
